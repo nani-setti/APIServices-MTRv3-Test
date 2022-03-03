@@ -1,0 +1,2486 @@
+---
+openapi: 3.0.0
+info:
+  title: Merchant Transaction Research
+  description: API Merchant Transaction Research
+  version: 3.0.4
+  contact:
+    email: partnerAPIs@worldpay.com
+paths:
+  /settlement-batches/summary:
+    post:
+      description: Daily Settled Batch Summary
+      tags:
+        - Batch Summary
+      summary: settlement batches by process date
+      operationId: settlement-batches1
+      parameters:
+        - in: header
+          name: v-correlation-id
+          description: Correlation Id
+          required: false
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DailySettledBatchSummaryOutput'
+              examples:
+                GroupByBatch:
+                  value:
+                    totalReturnedCount: 2
+                    totalRowCount: 25
+                    batchResults:
+                      - settledFromDate: '2015-08-05'
+                        settledToDate: '2015-09-15'
+                        dailyTotalSum: 95843.93
+                        details:
+                          - cardType: CREDIT
+                            netTotalAmount: 1785530.84
+                            summaryCount: 5
+                            summaryDetails:
+                              - rowNumber: 1
+                                batchNumber: 1
+                                salesCount: 28666
+                                salesAmount: 2057358.96
+                                returnsCount: 3378
+                                returnsAmount: -292628.67
+                                cashAdvanceAmount: 0
+                                cashAdvanceCount: 0
+                                netCount: 25288
+                                netAmount: 1764730.29
+                                merchantSurchargeCount: 2589
+                                merchantSurchargeAmount: 0
+                GroupByMerchantId:
+                  value:
+                    totalReturnedCount: 2
+                    totalRowCount: 25
+                    batchResults:
+                      - settledFromDate: '2015-08-05'
+                        settledToDate: '2015-09-15'
+                        dailyTotalSum: 95843.93
+                        details:
+                          - cardType: CREDIT
+                            netTotalAmount: 1785530.84
+                            summaryCount: 5
+                            summaryDetails:
+                              - rowNumber: 1
+                                merchantNumber: 4445000860700
+                                salesCount: 28670
+                                salesAmount: 2057435.2
+                                returnsCount: 3378
+                                returnsAmount: -292628.67
+                                cashAdvanceAmount: 0
+                                cashAdvanceCount: 0
+                                netCount: 25292
+                                netAmount: 1764806.53
+                                merchantSurchargeCount: 2591
+                                merchantSurchargeAmount: 0
+                GroupByDate:
+                  value:
+                    totalReturnedCount: 2
+                    totalRowCount: 25
+                    batchResults:
+                      - settledFromDate: '2015-08-05'
+                        settledToDate: '2015-09-15'
+                        dailyTotalSum: 95843.93
+                        details:
+                          - cardType: CREDIT
+                            netTotalAmount: 1785530.84
+                            summaryCount: 5
+                            summaryDetails:
+                              - rowNumber: 1
+                                processDate: '2015-08-05'
+                                salesCount: 809
+                                salesAmount: 51537.61
+                                returnsCount: 125
+                                returnsAmount: -12507.69
+                                cashAdvanceAmount: 0
+                                cashAdvanceCount: 0
+                                netCount: 684
+                                netAmount: 39029.92
+                                merchantSurchargeCount: 90
+                                merchantSurchargeAmount: 0
+        '204':
+          description: No Content
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        default:
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DailySettledBatchSummaryInput'
+      security:
+        - api_key: []          
+  /authorizations/search:
+    post:
+      description: Search Authorizations
+      tags:
+        - Search Authorizations
+      summary: Search Authorizations
+      operationId: authorizations
+      parameters:
+        - in: header
+          name: v-correlation-id
+          description: Correlation Id
+          required: false
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SearchAuthTransactionsOutput'
+              examples:
+                nonRealTine:
+                  value:
+                    totalReturnedCount: 1
+                    totalRowCount: 1186
+                    authTransactions:
+                      rowNumber: 1
+                      transactionDetail:
+                        processDate: 1551070800000
+                        transactionDateTime: {}
+                        transactionCode:
+                          code: IM
+                          description: Mail Order
+                          longDescription: Mail Order
+                        authAmount: 18.34
+                        cardNumber: 5135016630554726
+                        token: 0557218327933558
+                        chargeId: CHARGE_ID
+                        cardType:
+                          code: 1
+                          description: CREDIT
+                          longDescription: CREDIT
+                        cardNetwork:
+                          code: 1
+                          description: MASTERCARD
+                          longDescription: MASTERCARD
+                        responseCode:
+                          code: AA
+                          description: APPROVAL
+                          longDescription: APPROVAL
+                        entryMode:
+                          code: 1
+                          description: MAN KEYED
+                          longDescription: MANUALLY KEYED
+                        authCode: 06753P
+                        authResponseCode:
+                          code: 5
+                          description: Gen Decl (DNH)
+                          longDescription: Generic Decline (Do Not Honor)
+                        requestedAmount: 18.34
+                        authSource:
+                          code: 5
+                          description: ISSUER APPROVAL
+                          longDescription: ISSUER APPROVAL
+                        emvDetail:
+                          cardHolderVerificationMethod: Direct
+                          applicationIdentifier: E
+                          issuerCountryCode: USA
+                          uniqueSerialDeviceNo: MN
+                        tipAmount: 10.11
+                      locationInformation:
+                        chainCode: 139
+                        merchantName: WWW.CVS.COM
+                        merchantNumber: 4445042426957
+                        division: 1
+                        merchantCategoryCode: 5912
+                        terminalCapability:
+                          code: 5
+                          description: IC CARD READER
+                          longDescription: INTEGRATED CIRCUIT CARD READER
+                        storeNumber: 000008695
+                      additionalData:
+                        bankNetDate: 0831
+                        banknetRefNumber: MPLCRQ2QJ
+                        callType:
+                          code: A
+                          description: LOCAL
+                          longDescription: LOCAL
+                        cardActTerm:
+                          code: 0
+                          description: N/A
+                          longDescription: N/A
+                        cardholderID:
+                          code: 1
+                          description: SIGNATURE
+                          longDescription: SIGNATURE
+                        mailPhoneIndicator:
+                          description: N/A
+                          longDescription: N/A
+                        originType:
+                          code: F
+                          description: EMD
+                          longDescription: EMD
+                        posCondCode:
+                          code: 0
+                          description: NORMAL
+                          longDescription: NORMAL
+                        transactionId: 403855410002
+                        standInInd:
+                          code: 0
+                          description: 'NO'
+                          longDescription: 'NO'
+                        cardEMV: 'YES'
+                        dCCCurrencyConversionRate: 0
+                        dCCSettlementMarkupRate: 0
+                        eMVTransaction: 'Y'
+                        eMVTransactionType:
+                          code: 'Y'
+                          description: 'YES'
+                          longDescription: 'YES'
+                        offlineEMV: 'N'
+                        termEMV: 'YES'
+                        authCurrencyCode:
+                          code: 840
+                          description: 840-USA
+                          longDescription: USA
+                        standInLevel:
+                          code: 0
+                          description: LINK DOWN
+                          longDescription: LINK DOWN
+                        connectionMethod:
+                          description: UNSPECIFIED
+                          longDescription: UNSPECIFIED
+                        requestorTokenId:
+                          code: Token_Req_
+                          description: Debit
+                          longDescription: Debit
+                        marketSpecificDataIndicator:
+                          code: B
+                          description: Bill Payment
+                          longDescription: Bill Payment
+                      cardInformation:
+                        expirationDate: 145
+                        cVV2ResponseCode:
+                          description: N/A
+                          longDescription: N/A
+                        cVV2Value:
+                          description: NOT PROCESSED
+                          longDescription: NOT PROCESSED
+                        aVSResponseCode:
+                          description: N/A
+                          longDescription: N/A
+                        networkGroup: null
+                        ticIndicator: CS
+                        tICIndicator: CS
+                      otherServices:
+                        oldAuthAmount: 0
+                      interchangeDetail:
+                        merchantSurcharge: 0
+                      petroDetail:
+                        vehicleId: 111
+                        driverId: 292
+                        odometer: 333
+                        poNumber: 555
+                        driverNumber: 111
+                        productData:
+                          product:
+                            productType: F
+                            productCode: 9
+                            productQuantity: 333
+                            totalProductAmount: 444
+                            unitPrice: 222
+                            unitOfMeasurement: G
+                          product1:
+                            productType: F
+                            productCode: 9
+                            productQuantity: 333
+                            totalProductAmount: 444
+                            unitPrice: 222
+                            unitOfMeasurement: G
+                          product2:
+                            productType: F
+                            productCode: 9
+                            productQuantity: 333
+                            totalProductAmount: 444
+                            unitPrice: 222
+                            unitOfMeasurement: G
+                          product3:
+                            productType: F
+                            productCode: 9
+                            productQuantity: 333
+                            totalProductAmount: 444
+                            unitPrice: 222
+                            unitOfMeasurement: G
+                          product4:
+                            productType: F
+                            productCode: 9
+                            productQuantity: 333
+                            totalProductAmount: 444
+                            unitPrice: 222
+                            unitOfMeasurement: G
+                          product5:
+                            productType: F
+                            productCode: 9
+                            productQuantity: 333
+                            totalProductAmount: 444
+                            unitPrice: 222
+                            unitOfMeasurement: G
+                          product6:
+                            productType: F
+                            productCode: 9
+                            productQuantity: 333
+                            totalProductAmount: 444
+                            unitPrice: 222
+                            unitOfMeasurement: G
+                          product7:
+                            productType: F
+                            productCode: 9
+                            productQuantity: 333
+                            totalProductAmount: 444
+                            unitPrice: 222
+                            unitOfMeasurement: G
+                      fraudSightDetail:
+                        fraudResponseCode:
+                          description: FraudApp
+                          longDescription: Fraud system approved (or fraud system not enabled)
+                        fraudRuleResult:
+                          description: FSnotinvoke
+                          longDescription: FraudSight not invoked
+        '204':
+          description: No Content
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        default:
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SearchAuthTransactionsInput'
+        required: true
+      security:
+        - api_key: []     
+  /authorizations/details:
+    summary: Details of authorized transactions
+    post:
+      description: Retrieve Authorizations
+      tags:
+        - Retrieve Authorizations
+      summary: Retrieve Transaction details for supplied transaction ids
+      operationId: ''
+      parameters:
+        - in: header
+          name: v-correlation-id
+          description: Correlation Id
+          required: false
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetAuthTransactionDetailsOutput'
+        '204':
+          description: No Content
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        default:
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GetAuthTransactionsInput'
+        required: true
+      security:
+        - api_key: []  
+  /settlements/search:
+    post:
+      description: Search Settlements
+      tags:
+        - Search Settlements
+      summary: Search Settlements
+      operationId: settlements
+      parameters:
+        - in: header
+          name: v-correlation-id
+          description: Correlation Id
+          required: false
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SearchSettledTransactionsOutput'
+              examples:
+                nonRealTine:
+                  value:
+                    totalReturnedCount: 1
+                    totalRowCount: 1
+                    settledTransactions:
+                      rowNumber: 1
+                      transactionDetail:
+                        processDate: 1431748800000
+                        transactionDateTime: '20192015-05-15T11:12:00.000-04:00'
+                        transactionCode:
+                          code: 253
+                          description: SALE
+                          longDescription: SALE
+                        authAmount: 124.64
+                        cardNumber: 4744760121551552
+                        token: 0557218327933558
+                        chargeId: CHARGE_ID
+                        cardType:
+                          code: 1
+                          description: CREDIT
+                          longDescription: CREDIT
+                        cardNetwork:
+                          code: 1
+                          description: VISA
+                          longDescription: VISA
+                        entryMode:
+                          code: 90
+                          description: MAG STR RE
+                          longDescription: MAG STRIPE READ
+                        authCode: 161827
+                        tokenID: 0A9AFC
+                        amount: 124.64
+                        batchNumber: 47617
+                        sequenceNumber: 953687
+                        transactionNumber: 165135547315076
+                        fundedBy: Us
+                        tipAmount: 10.01
+                      locationInfo:
+                        chainCode: 0H3627
+                        merchantName: FL LICENSE/TAG/ASMT
+                        merchantNumber: 4445012455683
+                        merchantCategoryCode: 9399
+                        terminalCapability:
+                          code: 2
+                          description: MAG STRIPE READ
+                          longDescription: MAG STRIPE READ
+                        terminalAddress: 339 6TH AVE STE 1400
+                        terminalCity: PITTSBURGH
+                        terminalState: PA
+                        posRegisterNumber: 44
+                        terminalNumber: 000012455683001
+                        referenceNumber: 2.444500513600051e+22
+                        storeNumber: 7
+                        salesPerson: 718
+                      additionalData:
+                        cardProductResults:
+                          code: F
+                          description: Visa Classic
+                          longDescription: Visa Classic
+                        cardProductType:
+                          code: D
+                          description: Debit
+                          longDescription: Debit
+                        cardholderID:
+                          code: 1
+                          description: SIGNATURE
+                          longDescription: SIGNATURE
+                        mailPhoneIndicator:
+                          description: N/A
+                          longDescription: N/A
+                        marketSpecificDataIndicator:
+                          code: B
+                          description: Bill Payment
+                          longDescription: Bill Payment
+                        originType: {}
+                        transactionId: 30073099721
+                        validationCode: CZCL
+                        aci:
+                          code: E
+                          description: CARD PRESENT(E)
+                          longDescription: CARD PRESENT WITH MRCH NAME AND LOCATION
+                        cardEMV: 'No'
+                        eMVTransaction: 'N'
+                        eMVTransactionType:
+                          code: 'N'
+                          description: 'NO'
+                          longDescription: 'NO'
+                        offlineEMV: 'No'
+                        termEMV: 'NO'
+                        agentBank: 0
+                        authCurrencyCode:
+                          code: '840,'
+                          description: 840-USA
+                          longDescription: USA
+                        merchantRefNum: 00000632938
+                        unmatchedCredit: 'No'
+                        visaReversed: 'No'
+                        requestorTokenId:
+                          code: D
+                          description: Debit
+                          longDescription: Debit
+                      interChange:
+                        daysLate: 0
+                        discountAmount: 0
+                        interchangeCode: 51883
+                        interchangeCodeDesc: VS DEBIT REGULATED
+                        interchangeOtherFees: 0.29
+                        origInterchangeInd: M
+                        merchantSurcharge: 0
+                        surchargeAmount: -1.542352
+                        bundlingIndicator:
+                          code: U
+                          description: UNBUNDLED
+                          longDescription: UNBUNDLED
+                      cardInformation:
+                        expirationDate: 1217
+                        cVV2ResponseCode:
+                          description: NOT PROCESSED
+                          longDescription: NOT PROCESSED
+                        cVV2Value:
+                          description: N/A
+                          longDescription: N/A
+                        internationalInd:
+                          code: 'No'
+                        aVSResponseCode:
+                          code: 'N'
+                          description: ADDR/ZIPNOMATCH
+                          longDescription: ADDRESS AND ZIP DO NOT MATCH
+                        networkGroup: null
+                      otherServices:
+                        levelIndicator:
+                          code: 'N'
+                          description: 'No'
+                          longDescription: 'No'
+                        signatureCapInd:
+                          description: SIGN NOT CAPTUR
+                          longDescription: 'NO, SIGNATURE WAS NOT CAPTURED'
+                        signatureCompression: {}
+                        signaturePen": {}
+                      eComDetail:
+                        eComAuthorizeId: 1234
+                        eComCustomerId: 2345
+                        eComOrderId: 3456
+                        eComCampaignId: 4567
+                        eComAffiliateId: 5678
+                        eComMerchantGroupId: 6789
+                        eComReportGroupId: 7890
+                      MerchantDetails:
+                        chainSuper: SCNPFGRTST
+                        independentSalesContractor: PAYFAC
+                        independentSalesOrganization: 53
+                        merchantEntity: 71899074
+                      fraudSightDetail:
+                        fraudResponseCode:
+                          description: FraudApp
+                          longDescription: Fraud system approved (or fraud system not enabled)
+                        fraudRuleResult:
+                          description: FSnotinvoke
+                          longDescription: FraudSight not invoked
+                      signifydDetail:
+                        fraudVendorID: 34455
+                        fraudCoverageType:
+                          code: 3
+                          description: DcsnW/NoIndmnty
+                          longDescription: Decision With No Indemnity
+                        fraudDetectionStage:
+                          code: 2
+                          description: Live
+                          longDescription: Live
+                        fraudOsmStatus:
+                          description: OmninotCalled
+                          longDescription: Omnishield/FeatureSpace not called (blank)
+        '204':
+          description: No Content
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        default:
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SearchSettledTransactionsInput'
+        required: true
+      security:
+        - api_key: []   
+  /transactions/summary/byMonth:
+    post:
+      description: Monthly Transactions 18 month Summary
+      tags:
+        - Monthly Transactions Summary
+      summary: Summary of transactions by month for most recent 18 months
+      operationId: TransactionSummaryByMonth
+      parameters:
+        - in: header
+          name: v-correlation-id
+          description: Correlation Id
+          required: false
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MonthlyTranSummaryOutput'
+              examples:
+                monthlySummary:
+                  value:
+                    totalRowCount: 1
+                    settledTransactions:
+                      rowNumber: 1
+                      transactionDetail:
+                        merchantId: 12345678
+                        totalAmount: 16647.53
+                        totalCount: 154
+                        totalSalesAmount: 166.5
+                        totalSalesCount: 12
+                        creditSalesAmount: 166.5
+                        creditSalesCount: 12
+                        debitSalesAmount: 166.5
+                        debitSalesCount: 12
+                        returnsAmount: 166.5
+                        returnsCount: 12
+                        chargebackAmount: 166.5
+                        chargebackCount: 12
+                        transactionType: SIG
+                        transaction: SALES
+                        processMonth: 2019-08
+                        merchantCategoryCode:
+                          code: 5912
+                          description: DRUG STORES
+                          longDescription: DRUG STORES AND PHARMACIES
+        '204':
+          description: No Content
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        default:
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MonthlyTranSummaryInput'
+        required: true
+      security:
+        - api_key: [] 
+  /settlements/details:
+    summary: Details of settled transactions
+    post:
+      summary: Retrieve Transaction details for supplied transaction ids
+      description: Retrieve settled transactions
+      tags:
+        - Retrieve settled transactions
+      operationId: ''
+      parameters:
+        - in: header
+          name: v-correlation-id
+          description: Correlation Id
+          required: false
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetSettledTransactionDetailsOutput'
+        '204':
+          description: No Content
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        default:
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GetSettledTransactionDetailsInput'
+      security:
+        - api_key: []         
+  /products/summary:
+    post:
+      description: GetProductsSummary
+      tags:
+        - Products Summary
+      summary: Get products summary
+      operationId: productSummaries
+      parameters:
+        - in: header
+          name: v-correlation-id
+          description: Correlation Id
+          required: false
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Successful
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/GetProductsSummaryResponse'
+              examples: 
+                Single ProductsSummary:
+                    value:
+                      productsSummary:
+                        - productName : GETUP
+                          investmentReturn: 40.01
+                          incrementalRevenue: 100.24
+                          netRevenue: 200.34
+                          promotionAmount: 20.68
+                          feesAmount: 15.29
+                Multiple ProductsSummary:
+                    value:
+                      productsSummary:
+                        - productName : GETUP
+                          investmentReturn: 40.01
+                          incrementalRevenue: 100.24
+                          netRevenue: 200.34
+                          promotionAmount: 20.68
+                          feesAmount: 15.29
+                        - productName : XYZ
+                          investmentReturn: 48.01
+                          incrementalRevenue: 50.24
+                          netRevenue: 10.34
+                          promotionAmount: 29.68
+                          feesAmount: 18.29
+                          
+        '204':
+          description: No Content
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        default:
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      requestBody:
+        required : true
+        content:
+          application/json:
+            schema:
+             $ref: '#/components/schemas/ProductSummaryInput'
+      security:
+        - api_key: []   
+servers:
+  - url: 'https://ws.vantiv.com/transaction-research/v3'
+components:
+  schemas:
+    MonthlyTranSummaryInput:
+      type: object
+      properties:
+        paginationRequest:
+          $ref: '#/components/schemas/PaginationType'
+        sortResultsBy:
+          type: array
+          items:
+            $ref: '#/components/schemas/OrderByForMonthlySummaryType'
+          minLength: 0
+          maxLength: 10
+        entity:
+          type: string
+          example: '012345'
+        numberOfMonths:
+          type: string
+          example: '6'
+    GetSettledTransactionDetailsOutput:
+      type: object
+      properties:
+        transactionDetails:
+          type: array
+          items:
+            $ref: '#/components/schemas/SettledTransactionDetail'
+    GetSettledTransactionDetailsInput:
+      type: object
+      properties:
+        cardNetwork:
+          $ref: '#/components/schemas/CardNetwork'
+        entityID:
+          $ref: '#/components/schemas/EntityIDType'
+        transactionIds:
+          type: array
+          items:
+            type: integer
+            format: int64
+    DailySettledBatchSummaryInput:
+      type: object
+      properties:
+        settledFromDate:
+          type: string
+          format: date
+        settledToDate:
+          type: string
+          format: date
+        sortResultsBy:
+          type: array
+          items:
+            $ref: '#/components/schemas/OrderByForDailySettledBatchSummaryType'
+          minLength: 0
+          maxLength: 10
+        entity:
+          description: "Allowed hierarchies are CH and MT only"
+          type: array
+          items:
+            $ref: '#/components/schemas/EntityIDType'
+        cardType:
+          type: string
+          enum:
+            - CREDIT
+            - DEBIT
+            - GIFT_CARD
+        groupBy:
+          type: string
+          enum:
+            - BATCH
+            - DATE
+            - MERCHANTID
+            - MERCHANTIDANDBATCH
+            - DATEANDBATCH
+            - DATEANDMERCHANTID
+        paginationRequest:
+          $ref: '#/components/schemas/PaginationType'
+    CardNetwork:
+      type: string
+      enum:
+          - VISA
+          - MASTER_CARD
+          - DISCOVER
+          - AMEX
+          - VOYAGER
+          - WEX
+          - JCB
+          - PRIVATE_LABEL
+          - INTERLINK
+          - NYCE
+          - PULSE
+          - STAR
+          - MAESTRO
+          - OTHER
+          - GIFT_CARD
+          - EBT
+          - WIC
+          - POS_CHECK
+          - BILL_ME_LATER
+          - JEANIE
+          - ACH
+          - POSA
+          - FLEETCOR
+          - FLEETONE
+          - COBRAND      
+    EntityIDType:
+      type: object
+      properties:
+        value:
+          type: string
+          example: '4445000860700'
+        type:
+          type: string
+          enum:
+            - AC
+            - AG
+            - AN
+            - AT
+            - BR
+            - CB
+            - CH
+            - CO
+            - DV
+            - MT
+            - NL
+            - PB
+            - PR
+            - RG
+            - SA
+            - SC
+            - SO
+            - ST
+    OrderByForMonthlySummaryType:
+      type: object
+      properties:
+        fieldName:
+          type: string
+          enum:
+            - MerchantId
+            - ProcessMonth
+            - TotalAmount
+            - TotalCount
+            - TotalSalesAmount
+            - TotalSalesCount
+            - CreditSalesAmount
+            - CreditSalesCount
+            - DebitSalesAmount
+            - DebitSalesCount
+            - ReturnsAmount
+            - ReturnsCount
+            - ChargebackAmount
+            - ChargebackCount
+            - MerchantCategoryCode
+        orderBy:
+          type: string
+          enum:
+            - ASC
+            - DESC
+    OrderByForDailySettledBatchSummaryType:
+      type: object
+      properties:
+        fieldName:
+          type: string
+          enum:
+            - CardType
+            - BatchNumber
+            - MerchantNumber
+            - ProcessDate
+            - TotalSalesCount
+            - TotalSalesAmount
+            - TotalReturnCount
+            - TotalReturnAmount
+            - CashAdvanceAmount
+            - CashAdvanceCount
+            - NetCount
+            - NetAmount
+            - ApprovedAmount
+            - CompletedCount
+            - ReversalCount
+            - MerchantSurchargeCount
+            - MerchantSurchargeAmount
+    SearchAuthTransactionsInput:
+      type: object
+      properties:
+        pagination:
+          items:
+            $ref: '#/components/schemas/PaginationType'
+        sortResultsBy:
+          type: array
+          items:
+            $ref: '#/components/schemas/OrderByForAuthTransactionsType'
+          minLength: 0
+          maxLength: 10
+        entities:
+          type: array
+          items:
+            $ref: '#/components/schemas/EntityListType'
+        cardType:
+          type: array
+          items:
+            $ref: '#/components/schemas/CardTypes'
+        cardNetwork:
+          type: string
+          pattern: '[0-9A-Za-z]+'
+          example: '6'
+        processDate:
+          $ref: '#/components/schemas/DateRangeOptionalType'
+        transactionDate:
+          $ref: '#/components/schemas/DateRangeOptionalType'
+        cardNumber:
+          type: string
+          minLength: 0
+          maxLength: 20
+          example: 1234**********20
+        realTimeIndicator:
+          type: array
+          items:
+            $ref: '#/components/schemas/RealTimeIndicator'
+        customerDiscretionaryFields:
+          $ref: '#/components/schemas/CustomerDiscretionaryFields'
+        eComDetail:
+          $ref: '#/components/schemas/EComDetail'
+        amount:
+          $ref: '#/components/schemas/AmountRangeType'
+        countOnly:
+          type: string
+          example: 'false'
+    GetAuthTransactionsInput:
+      type: object
+      properties:
+          cardNetwork:
+            $ref: '#/components/schemas/CardNetwork'
+          entityID:
+            type: array
+            items:
+              $ref: '#/components/schemas/EntityIDType'
+          transactionIds:
+            type: array
+            items:
+              type: integer
+              example: 1245277      
+    SearchSettledTransactionsInput:
+      type: object
+      properties:
+        pagination:
+          items:
+            $ref: '#/components/schemas/PaginationType'
+        sortResultsBy:
+          type: array
+          items:
+            $ref: '#/components/schemas/OrderByForSettledTransactionsType'
+        entities:
+          type: array
+          items:
+            $ref: '#/components/schemas/EntityListType'
+        cardType:
+          $ref: '#/components/schemas/CardTypes'
+        cardNetwork:
+          type: string
+          pattern: '[0-9A-Za-z]+'
+          example: '6'
+        processDate:
+          $ref: '#/components/schemas/DateRangeOptionalType'
+        transactionDate:
+          $ref: '#/components/schemas/DateRangeOptionalType'
+        cardNumber:
+          type: string
+          minLength: 0
+          maxLength: 20
+          example: 60************77
+        customerDiscretionaryFields:
+          $ref: '#/components/schemas/CustomerDiscretionaryFields'
+        token:
+          type: string
+        authCode:
+          type: string
+        merchantCategoryCode:
+          type: string
+        transactionType:
+          type: array
+          items:
+            type: string
+        transactionId:
+          type: string
+        registerNumber:
+          type: string
+        terminalNumber:
+          type: array
+          items:
+            type: string
+        batchNumber:
+          type: string
+        salesPerson:
+          type: string
+        referenceNumber:
+          type: string
+        amount:
+          $ref: '#/components/schemas/AmountRangeType'
+        eComDetail:
+          $ref: '#/components/schemas/EComDetail'
+    OrderByForSettledTransactionsType:
+      type: object
+      properties:
+        fieldName:
+          type: string
+          enum:
+            - CardNumber
+            - CardType
+            - Token
+            - RequestorTokenId
+            - ChargeId
+            - CardNetwork
+            - AuthCode
+            - ReferenceNumber
+            - TransactionID
+            - PosCondCode
+            - Field1
+            - Field2
+            - Field3
+            - EComAuthorizeId
+            - EComCustomerId
+            - EComOrderId
+            - EComCampaignId
+            - EComAffiliateId
+            - EComMerchantGroupId
+            - EComReportGroupId
+            - TICIndicator
+            - MerchantCountry
+            - AgentBankNational
+            - ChainSuper
+            - IndependentSalesContractor
+            - IndependentSalesOrganization
+            - MerchantEntity
+            - MarketSpecificDataIndicator
+            - PinDebitBlock
+        ordering:
+          type: string
+          enum:
+            - ASC
+            - DESC
+    MonthlyTranSummaryOutput:
+      type: object
+      properties:
+        paginationResponse:
+          type: array
+          items:
+            $ref: '#/components/schemas/PaginationResponse'
+        totalReturnedCount:
+          type: string
+          example: '25'
+        totalRowCount:
+          type: integer
+          format: int32
+          example: '100'
+        monthlySummary:
+          type: array
+          items:
+            $ref: '#/components/schemas/MonthlySummaryDetails'
+    MonthlySummaryDetails:
+      properties:
+        rowNumber:
+          type: integer
+          format: int32
+          example: '1'
+        merchantId:
+          type: string
+          example: '4567891232456'
+        totalAmount:
+          type: string
+          example: '58.59'
+        totalCount:
+          type: string
+          example: '20'
+        totalSalesAmount:
+          type: string
+          example: '58.59'
+        totalSalesCount:
+          type: string
+          example: '20'
+        creditSalesAmount:
+          type: string
+          example: '58.59'
+        creditSalesCount:
+          type: string
+          example: '20'
+        debitSalesAmount:
+          type: string
+          example: '58.59'
+        debitSalesCount:
+          type: string
+          example: '20'
+        returnsAmount:
+          type: string
+          example: '58.59'
+        returnsCount:
+          type: string
+          example: '20'
+        chargebackAmount:
+          type: string
+          example: '58.59'
+        chargebackCount:
+          type: string
+          example: '20'
+        transactionType:
+          type: string
+          example: SALES
+        transaction:
+          type: string
+          example: SIG
+        processMonth:
+          type: string
+          format: date
+          example: 2017-01
+        merchantCategoryCode:
+          $ref: '#/components/schemas/CodeAndDescription'
+    DailySettledBatchSummaryOutput:
+      type: object
+      properties:
+        totalReturnedCount:
+          type: integer
+          example: '25'
+        totalRowCount:
+          type: integer
+          example: '100'
+        batchResults:
+          $ref: '#/components/schemas/BatchResults'
+    BatchResults:
+      type: object
+      properties:
+        settledFromDate:
+          type: string
+          format: date
+          example: '2019-06-10'
+        settledToDate:
+          type: string
+          format: date
+          example: '2019-07-12'
+        dailyTotalSum:
+          type: number
+          format: decimal
+          example: '20254.78'
+        details:
+          type: array
+          items:
+            $ref: '#/components/schemas/DaySummaryDetails'
+    DaySummaryDetails:
+      type: object
+      properties:
+        cardType:
+          type: string
+          example: CREDIT
+        netTotalAmount:
+          type: number
+          format: decimal
+          example: '20254.78'
+        summaryCount:
+          type: integer
+          format: int32
+          example: '1'
+        summaryDetails:
+          type: array
+          items:
+            $ref: '#/components/schemas/Batch'
+    Batch:
+      type: object
+      properties:
+        batchNumber:
+          type: string
+          example: '00000000001'
+        merchantNumber:
+          type: string
+          example: '4567891232456'
+        processDate:
+          type: string
+          format: date
+        salesCount:
+          type: integer
+          format: int32
+          example: '8'
+        salesAmount:
+          type: number
+          format: decimal
+          example: '718.63'
+        returnsCount:
+          type: integer
+          format: int32
+        returnsAmount:
+          type: number
+          format: decimal
+          example: '0.00'
+        cashAdvanceAmount:
+          type: number
+          format: decimal
+          example: '0.00'
+        cashAdvanceCount:
+          type: integer
+          format: int32
+          example: '0'
+        netCount:
+          type: integer
+          format: int32
+          example: '8'
+        netAmount:
+          type: number
+          format: decimal
+          example: '718.63'
+        approvedAmount:
+          type: number
+          format: decimal
+          example: '0.00'
+        completedCount:
+          type: integer
+          format: int32
+        reversalCount:
+          type: integer
+          format: int32
+        merchantSurchargeCount:
+          type: integer
+          format: int32
+          example: '2'
+        merchantSurchargeAmount:
+          type: number
+          format: decimal
+          example: '0.00'
+    SearchAuthTransactionsOutput:
+      type: object
+      properties:
+        paginationResponse:
+          type: array
+          items:
+            $ref: '#/components/schemas/PaginationResponse'
+        totalRowCount:
+          type: integer
+          format: int32
+          example: '3'
+        authTransactions:
+          type: array
+          items:
+            $ref: '#/components/schemas/TransactionDetails'
+    GetAuthTransactionDetailsOutput:
+      type: object
+      properties:
+        transactionDetails:
+          type: array
+          items:
+            $ref: '#/components/schemas/TransactionDetails'
+    SearchSettledTransactionsOutput:
+      type: object
+      properties:
+        paginationResponse:
+          $ref: '#/components/schemas/PaginationResponse'
+        totalRowCount:
+          type: integer
+          format: int32
+        settledTransactions:
+          type: array
+          items:
+            $ref: '#/components/schemas/SettledTransactionDetail'
+    PaginationType:
+      type: object
+      properties:
+        offset:
+          type: integer
+          format: int32
+          default: '1'
+          example: '1'
+        limit:
+          type: integer
+          format: int32
+          default: '25'
+          example: '3'
+    OrderByForAuthTransactionsType:
+      type: object
+      properties:
+        fieldName:
+          type: string
+          enum:
+            - TransactionDateTime
+            - TransactionCode
+            - AuthAmount
+            - CardNumber
+            - Token
+            - RequestorTokenId
+            - ChargeId
+            - CardType
+            - CardNetwork
+            - ResponseCode
+            - EntryMode
+            - ConnectionMethod
+            - StoreNumber
+            - ChainCode
+            - MerchantName
+            - MerchantNumber
+            - AuthCode
+            - AuthCurrencyCode
+            - AuthResponseCode
+            - AuthSource
+            - AVSResponseCode
+            - CallType
+            - CardActTerm
+            - CardEMV
+            - CardholderID
+            - ClerkID
+            - CVV2ResponseCode
+            - CVV2PresenceIndicator
+            - DccCurrencyConversionRate
+            - DccSettlementMarkupRate
+            - Division
+            - EMVTransaction
+            - ExpirationDate
+            - MailPhoneIndicator
+            - MerchantCategoryCode
+            - OfflineEMV
+            - OldAuthAmount
+            - OriginType
+            - PosCondCode
+            - StandInInd
+            - StandInLevel
+            - TermEMV
+            - TerminalCapability
+            - Token
+            - TokenID
+            - TransactionId
+            - VoidInd
+            - Field1
+            - Field2
+            - Field3
+            - BankNetDate
+            - BanknetRefNumber
+            - ACI
+            - CardProductResults
+            - RetrievalRefNum
+            - ValidationCode
+            - SettlementType
+            - RequestedAmount
+            - POSRegisterNumber
+            - TerminalNumber
+            - ACRO
+            - CardholderBankAcro
+            - CashbackAmount
+            - ForcePost
+            - FromAccount
+            - GCRetrievalReferenceNumber
+            - HasAdjustmentRecord
+            - MassTransactionId
+            - NetworkGroup
+            - NetworkID
+            - PinLess
+            - RequestorTokenId
+            - ProcessDate
+            - ProcessLocation
+            - RemainingBalance
+            - SequenceNumber
+            - Settled
+            - ToAccount
+            - VoucherNumber
+            - BatchNumber
+            - CardHolderVerificationMethod
+            - ApplicationIdentifier
+            - IssuerCountryCode
+            - UniqueSerialDeviceNo
+            - EComAuthorizeId
+            - EComCustomerId
+            - EComOrderId
+            - EComCampaignId
+            - EComAffiliateId
+            - EComMerchantGroupId
+            - EComReportGroupId
+            - TICIndicator
+            - FraudScore
+            - FraudRule
+            - FraudResponseCode
+            - FraudRuleResult
+            - VehicleId
+            - DriverId
+            - Odometer
+            - PoNumber
+            - DriverNumber
+            - MarketSpecificDataIndicator
+            - PinDebitBlock
+            - TipAmount
+        ordering:
+          type: string
+          enum:
+            - ASC
+            - DESC
+    EntityListType:
+      type: object
+      properties:
+        entity:
+          $ref: '#/components/schemas/EntityIDType'
+        entityHierarchy:
+          $ref: '#/components/schemas/EntityHierarchyType'
+    EntityHierarchyType:
+      type: object
+      properties:
+        parentEntity:
+          $ref: '#/components/schemas/EntityIDType'
+        childEntity:
+          $ref: '#/components/schemas/EntityIDType'
+    CardTypes:
+      type: object
+      properties:
+        value:
+          type: string
+          enum:
+            - CREDIT
+            - DEBIT
+            - EBT
+            - WIC
+            - GIFT_CARD
+    DateRangeOptionalType:
+      type: object
+      properties:
+        fromDate:
+          type: string
+          format: date
+        toDate:
+          type: string
+          format: date
+    RealTimeIndicator:
+      type: object
+      properties:
+        value:
+          type: string
+          enum:
+            - REAL_TIME_ONLY
+            - NON_REAL_TIME_ONLY
+    CustomerDiscretionaryFields:
+      type: object
+      properties:
+        field1:
+          type: string
+          example: GC
+        field2:
+          type: string
+          example: RealTime
+        field3:
+          type: string
+          example: Report
+    AmountRangeType:
+      type: object
+      properties:
+        fromAmount:
+          type: number
+          format: decimal
+          example: '10.1'
+        toAmount:
+          type: number
+          format: decimal
+          example: '50.0'
+    EComDetail:
+      type: object
+      properties:
+        eComAuthorizeId:
+          type: string
+          example: G123
+        eComCustomerId:
+          type: string
+          example: G345
+        eComOrderId:
+          type: string
+          example: G567
+        eComCampaignId:
+          type: string
+          example: G333
+        eComAffiliateId:
+          type: string
+          example: G568
+        eComMerchantGroupId:
+          type: string
+          example: G921
+        eComReportGroupId:
+          type: string
+          example: G555
+    MerchantDetailsType:
+      type: object
+      properties:
+        merchantCountry:
+          type: string
+          example: G345
+        agentBankNational:
+          type: string
+          example: N000NPC
+        chainSuper:
+          type: string
+          example: SCNPCB6009
+        independentSalesContractor:
+          type: string
+          example: ELAQCV
+        independentSalesOrganization:
+          type: string
+          example: MERCURY
+        merchantEntity:
+          type: integer
+          example: 10082555
+    SettledTransactionDetail:
+      type: object
+      properties:
+        rowNumber:
+          type: integer
+          format: int32
+          example: '1'
+        transactionDetail:
+          $ref: '#/components/schemas/TransactionDetail'
+        locationInfo:
+          $ref: '#/components/schemas/LocationDetail'
+        additionalData:
+          $ref: '#/components/schemas/AdditionalDetail'
+        interChange:
+          $ref: '#/components/schemas/InterChangeDetail'
+        cardInformation:
+          $ref: '#/components/schemas/CardDetail'
+        otherServices:
+          $ref: '#/components/schemas/OtherServicesDetail'
+        eComDetail:
+          $ref: '#/components/schemas/EComDetail'
+        petroDetail:
+          $ref: '#/components/schemas/PetroDetail'
+        fraudSightDetail:
+          $ref: '#/components/schemas/FraudSightDetail'
+        merchantDetails:
+          $ref: '#/components/schemas/MerchantDetailsType'
+        signifydDetail:
+          $ref: '#/components/schemas/SignifydDetail'
+    PaginationResponse:
+      type: object
+      properties:
+        pagination:
+          $ref: '#/components/schemas/PaginationType'
+        moreDataAvailable:
+          type: boolean
+          example: 'false'
+        totalRowCount:
+          type: integer
+          format: int32
+          example: '3'
+    TransactionDetails:
+      type: object
+      properties:
+        rowNumber:
+          type: integer
+          format: int32
+          example: '1'
+        transactionDetail:
+          type: array
+          items:
+            $ref: '#/components/schemas/TransactionDetail'
+        locationInformation:
+          type: array
+          items:
+            $ref: '#/components/schemas/LocationDetail'
+        additionalData:
+          type: array
+          items:
+            $ref: '#/components/schemas/AdditionalDetail'
+        cardInformation:
+          type: array
+          items:
+            $ref: '#/components/schemas/CardDetail'
+        otherServices:
+          type: array
+          items:
+            $ref: '#/components/schemas/OtherServicesDetail'
+        interchangeDetail:
+          type: array
+          items:
+            $ref: '#/components/schemas/AuthInterchangeDetail'
+        eComDetail:
+          type: array
+          items:
+            $ref: '#/components/schemas/EComDetail'
+        petroDetail:
+          type: array
+          items:
+            $ref: '#/components/schemas/PetroDetail'
+        fraudSightDetail:
+          type: array
+          items:
+            $ref: '#/components/schemas/FraudSightDetail'
+        signifydDetail:
+          type: array
+          items:
+            $ref: '#/components/schemas/SignifydDetail'
+    TransactionDetail:
+      properties:
+        processDate:
+          type: string
+          format: date
+          example: '2017-02-28'
+        transactionDateTime:
+          type: string
+          format: date-time
+          example: '2017-01-25T11:33:33.000-05:00'
+        transactionDateTimestamp:
+          type: string
+          format: date-time
+          example: '2017-01-25T11:33:33.000-05:00'
+        transactionCode:
+          $ref: '#/components/schemas/CodeAndDescription'
+        authAmount:
+          type: number
+          format: decimal
+          example: '58.59'
+        cardNumber:
+          type: string
+          example: 44304500********
+        token:
+          type: string
+          example: 0557218327933558
+        chargeId:
+          type: string
+          example: CHARGE_ID
+        cardType:
+          $ref: '#/components/schemas/CodeAndDescription'
+        cardNetwork:
+          $ref: '#/components/schemas/CodeAndDescription'
+        responseCode:
+          $ref: '#/components/schemas/CodeAndDescription'
+        entryMode:
+          $ref: '#/components/schemas/CodeAndDescription'
+        authCode:
+          type: string
+          example: 01174B
+        authResponseCode:
+          $ref: '#/components/schemas/CodeAndDescription'
+        businessDate:
+          type: string
+          format: date
+        cashbackAmount:
+          type: number
+          format: decimal
+          example: '0.00'
+        requestedAmount:
+          type: number
+          format: decimal
+          example: '58.59'
+        tokenID:
+          type: string
+          example: '12345678'
+        amount:
+          type: number
+          format: decimal
+        batchNumber:
+          type: string
+          example: 00000400538
+        sequenceNumber:
+          type: string
+          example: 003874
+        cashBack:
+          type: string
+        denialCode:
+          $ref: '#/components/schemas/CodeAndDescription'
+        settled:
+          type: string
+          example: 'Yes'
+        authNumber:
+          type: string
+        approvedAmount:
+          type: number
+          format: decimal
+        authSource:
+          $ref: '#/components/schemas/CodeAndDescription'
+        oldAuthAmount:
+          type: number
+          format: decimal
+        voidInd:
+          type: string
+        remainingBalance:
+          type: string
+        processLocation:
+          type: string
+          example: '14'
+        adjustment:
+          type: string
+        transactionNumber:
+          type: string
+        emvDetail:
+          type: array
+          items:
+            $ref: '#/components/schemas/EmvDetailType'
+        tokenExpirationDate:
+          type: string
+          example: '9999'
+        tokenAssuranceLevel:
+          type: string
+          example: '2'
+        lastFourNetworkPAN:
+          type: string
+        fundedBy:
+          type: string
+          example: Us
+        pinDebitBlock:
+          type: string
+        rewardAmount:
+          type: number
+          format: decimal
+        rewardBinEligible:
+          type: string
+        rewardCardEligible:
+          type: string
+        rewardReturnIndicator:
+          type: string
+        amexTransactionId:
+          type: string
+        tipAmount:
+          type: number
+          format: decimal
+          example: 12.21
+    LocationDetail:
+      properties:
+        store:
+          type: string
+        chainCode:
+          type: string
+          example: 000086
+        merchantName:
+          type: string
+          example: MACYS  OXFORD VALLEY
+        merchantNumber:
+          type: string
+          example: 4445090*****
+        clerkID:
+          type: string
+        division:
+          type: string
+          example: '002'
+        merchantCategoryCode:
+          type: string
+        terminalCapability:
+          $ref: '#/components/schemas/CodeAndDescription'
+        terminalAddress:
+          type: string
+          example: 210 11TH ST
+        terminalCity:
+          type: string
+          example: HUNTINGTON
+        terminalState:
+          type: string
+          example: WV
+        transactionLocator:
+          type: string
+        acro:
+          type: string
+          example: MACD
+        posRegisterNumber:
+          type: string
+          example: '0050'
+        terminalNumber:
+          type: string
+          example: D0640450
+        referenceNumber:
+          type: string
+          example: '99999997049100000050899'
+        storeNumber:
+          type: string
+          example: '000000064'
+        alternateMerchantNumber:
+          type: string
+          example: '520000665864'
+        salesPerson:
+          type: string
+          example: '000000000'
+    EmvDetailType:
+      properties:
+        emvTransaction:
+          $ref: '#/components/schemas/CodeAndDescription'
+        emvCardType:
+          $ref: '#/components/schemas/CodeAndDescription'
+        terminalCapability:
+          $ref: '#/components/schemas/CodeAndDescription'
+        terminalPinCapability:
+          $ref: '#/components/schemas/CodeAndDescription'
+        offlineEmv:
+          $ref: '#/components/schemas/CodeAndDescription'
+        fallback:
+          $ref: '#/components/schemas/CodeAndDescription'
+        cryptogramValid:
+          $ref: '#/components/schemas/CodeAndDescription'
+        pinAccepted:
+          $ref: '#/components/schemas/CodeAndDescription'
+        serviceCode:
+          $ref: '#/components/schemas/CodeAndDescription'
+        emvEntryMode:
+          $ref: '#/components/schemas/CodeAndDescription'
+        emvTerminalCapability:
+          $ref: '#/components/schemas/CodeAndDescription'
+        pointOfServiceIndicator:
+          $ref: '#/components/schemas/PointOfServiceIndicatorType'
+        cardHolderVerificationMethod:
+          type: string
+        applicationIdentifier:
+          type: string
+        issuerCountryCode:
+          type: string
+        uniqueSerialDeviceNo:
+          type: string
+    InterChangeDetail:
+      properties:
+        daysLate:
+          type: string
+        discountAmount:
+          $ref: '#/components/schemas/DecimalNineAmountType'
+        interchangeCode:
+          type: string
+        interchangeCodeDesc:
+          type: string
+        interchangeOtherFees:
+          $ref: '#/components/schemas/DecimalNineAmountType'
+        origInterchangeInd:
+          type: string
+        origInterchangeIndDesc:
+          type: string
+        merchantSurcharge:
+          $ref: '#/components/schemas/DecimalNineAmountType'
+        surchargeAmount:
+          $ref: '#/components/schemas/DecimalNineAmountType'
+        surchargeReason:
+          type: string
+        surchargeReasonCodeDesc:
+          type: string
+        bundlingIndicator:
+          $ref: '#/components/schemas/CodeAndDescription'
+        preReauthIntchgCode:
+          type: string
+        preReauthIntchgAmt:
+          type: number
+          format: decimal
+    PointOfServiceIndicatorType:
+      type: object
+      properties:
+        posCardInputCapability:
+          $ref: '#/components/schemas/CodeAndDescription'
+        posCardInputMode:
+          $ref: '#/components/schemas/CodeAndDescription'
+        posCardHolderAuthMethod:
+          $ref: '#/components/schemas/CodeAndDescription'
+    AdditionalDetail:
+      type: object
+      properties:
+        cardProductResults:
+          $ref: '#/components/schemas/CodeAndDescription'
+        cardProductType:
+          $ref: '#/components/schemas/CodeAndDescription'
+        bankNetDate:
+          type: string
+        banknetRefNumber:
+          type: string
+        callType:
+          $ref: '#/components/schemas/CodeAndDescription'
+        cardActTerm:
+          $ref: '#/components/schemas/CodeAndDescription'
+        cardholderID:
+          $ref: '#/components/schemas/CodeAndDescription'
+        gcRetrievalReferenceNumber:
+          type: string
+        mailPhoneIndicator:
+          $ref: '#/components/schemas/CodeAndDescription'
+        originType:
+          $ref: '#/components/schemas/CodeAndDescription'
+        pOSCondCode:
+          $ref: '#/components/schemas/CodeAndDescription'
+        retrievalRefNum:
+          type: string
+        transactionId:
+          type: integer
+          format: int32
+          example: '186354016598'
+        validationCode:
+          type: string
+        voidInd:
+          type: string
+        standInInd:
+          $ref: '#/components/schemas/CodeAndDescription'
+        pinLess:
+          type: string
+          example: 'NO'
+        forcePost:
+          type: string
+          example: 'No'
+        hasAdjustmentRecord:
+          type: string
+          example: Not Adjusted
+        transactionType:
+          type: string
+        transactionTypeDesc:
+          type: string
+        merchantNumber:
+          type: string
+        aci:
+          $ref: '#/components/schemas/CodeAndDescription'
+        authCurrency:
+          type: string
+        cardEMV:
+          type: string
+          example: 'YES'
+        dCCCurrencyConversionRate:
+          type: string
+        dCCSettlementMarkupRate:
+          $ref: '#/components/schemas/DecimalNineAmountType'
+        dCCMcpCurrencyConversionRate:
+          type: string
+        dCCMcpSettlementMarkupRate:
+          $ref: '#/components/schemas/DecimalNineAmountType'
+        eMVTransaction:
+          type: string
+          example: 'Y'
+        eMVTransactionType:
+          $ref: '#/components/schemas/CodeAndDescription'
+        marketSpecificDataIndicator:
+          $ref: '#/components/schemas/CodeAndDescription'
+        oflineEMV:
+          type: string
+          example: ''
+        settlementType:
+          type: string
+        termEMV:
+          type: string
+          example: 'Yes'
+        terminalCapacity:
+          type: string
+        tieBreaker:
+          type: string
+        validationCodeACI:
+          type: string
+        agentBank:
+          type: string
+          example: '0000'
+        arrivalDate:
+          type: string
+          format: date
+        authCurrencyCode:
+          $ref: '#/components/schemas/CodeAndDescription'
+        standInLevel:
+          $ref: '#/components/schemas/CodeAndDescription'
+        issuerAgent:
+          type: string
+        departureDate:
+          type: string
+          format: date
+        merchantRefNum:
+          type: string
+          example: ''
+        unmatchedCredit:
+          type: string
+          example: 'No'
+        visaReversed:
+          type: string
+          example: 'NO'
+        visaReversedDate:
+          type: string
+          format: date
+        customerDiscretionaryFields:
+          type: array
+          items:
+            $ref: '#/components/schemas/CustomerDiscretionaryFields'
+        requestorTokenId:
+          $ref: '#/components/schemas/CodeAndDescription'
+        massTransactionId:
+          type: string
+        connectionMethod:
+          $ref: '#/components/schemas/CodeAndDescription'
+        authCommunicationType:
+          $ref: '#/components/schemas/CodeAndDescription'
+        orderNumber:
+          type: string
+        noteId:
+          type: string
+          example: '12345'
+        TransactionNote:
+          type: string
+          example: 'Transaction note'
+    CardDetail:
+      type: object
+      properties:
+        cVV2Ind:
+          $ref: '#/components/schemas/CodeAndDescription'
+        cVV2PresenceIndicator:
+          $ref: '#/components/schemas/CodeAndDescription'
+        expirationDate:
+          type: string
+        remainingBalance:
+          type: number
+          format: decimal
+        cVV2ResponseCode:
+          $ref: '#/components/schemas/CodeAndDescription'
+        cVV2Value:
+          $ref: '#/components/schemas/CodeAndDescription'
+        internationalInd:
+          $ref: '#/components/schemas/CodeAndDescription'
+        aVSResponseCode:
+          $ref: '#/components/schemas/CodeAndDescription'
+        cardholderBankAcro:
+          type: string
+          example: STA1
+        networkID:
+          type: string
+          example: 49 - EXPLORE/STAR NETWORK
+        accountType:
+          $ref: '#/components/schemas/CodeAndDescription'
+        voucherNumber:
+          type: string
+        networkGroup:
+          $ref: '#/components/schemas/CodeAndDescription'
+        toAccount:
+          type: string
+        toAccountType:
+          $ref: '#/components/schemas/CodeAndDescription'
+        fromAccount:
+          $ref: '#/components/schemas/CodeAndDescription'
+        masterCardWalletId:
+          type: string
+        cAVVResponse:
+          type: string
+        tICIndicator:
+          type: string
+    OtherServicesDetail:
+      type: object
+      properties:
+        oldAuthAmount:
+          type: number
+          format: decimal
+        dCCMCPIndicator:
+          type: string
+        levelIndicator:
+          $ref: '#/components/schemas/CodeAndDescription'
+        numReAuthAtmpt:
+          type: string
+        origReAuthReason:
+          type: string
+        signatureCapInd:
+          $ref: '#/components/schemas/CodeAndDescription'
+        signatureCompression:
+          $ref: '#/components/schemas/CodeAndDescription'
+        signatureEncryptKey:
+          type: string
+        signatureEncryptMethod:
+          type: string
+        signaturePen:
+          $ref: '#/components/schemas/CodeAndDescription'
+    AuthInterchangeDetail:
+      type: object
+      properties:
+        merchantSurcharge:
+          $ref: '#/components/schemas/DecimalNineAmountType'
+        interchangeCode:
+          type: string
+          example: '000030215'
+        interchangeCodeDesc:
+          type: string
+          example: STAR WEST REGULTD FRAUD
+        interchangeOtherFees:
+          $ref: '#/components/schemas/DecimalNineAmountType'
+    PetroDetail:
+      type: object
+      properties:
+        vehicleId:
+          type: string
+        driverId:
+          type: string
+        odometer:
+          type: string
+        poNumber:
+          type: string
+        driverNumber:
+          type: string
+        productData:
+          type: array
+          items:
+            $ref: '#/components/schemas/Product'
+    Product:
+      type: object
+      properties:
+        productType:
+          type: string
+        productCode:
+          type: string
+        productQuantity:
+          type: number
+          format: decimal
+        totalProductAmount:
+          type: number
+          format: decimal
+        unitPrice:
+          type: number
+          format: decimal
+        unitOfMeasurement:
+          type: string
+    FraudSightDetail:
+      type: object
+      properties:
+        fraudScore:
+          type: string
+        fraudRule:
+          type: string
+        fraudResponseCode:
+          $ref: '#/components/schemas/CodeAndDescription'
+        fraudRuleResult:
+          $ref: '#/components/schemas/CodeAndDescription'
+        fraudResponseTime:
+          type: string
+    SignifydDetail:
+      type: object
+      properties:
+        fraudVendorID:
+          type: string
+        fraudCoverageType:
+          $ref: '#/components/schemas/CodeAndDescription'
+        fraudDetectionStage:
+          $ref: '#/components/schemas/CodeAndDescription'
+        fraudOsmStatus:
+          $ref: '#/components/schemas/CodeAndDescription'
+    CodeAndDescription:
+      type: object
+      properties:
+        code:
+          type: string
+          example: '10'
+        description:
+          type: string
+          example: POS DB CRD PUR
+        longDescription:
+          type: string
+          example: POS DEBIT CARD PURCHASE
+    DecimalNineAmountType:
+      type: number
+      format: decimal
+      example: '-0.250000000'
+    ProductSummaryInput:
+      required:
+           - dateRange
+           - entity
+           - value
+           - type
+      type: object
+      properties:
+        productName:
+          type: array 
+          items:
+            type: string
+          example: 
+             - GETUP
+             - ANYOTHER
+        entity:
+          description: 'For getupside product, either CH or MT entity is allowed'
+          type: array
+          items: 
+            $ref: '#/components/schemas/EntityIDType'
+        dateRange:
+          type: object
+          properties:
+            fromDate:
+              type: string
+              format: date
+            toDate:
+              type: string
+              format: date
+    ErrorResponse:
+      title: ErrorResponse
+      type: object
+      properties:
+        httpStatusCode:
+          description: ''
+          type: string
+          example: '404'
+        httpStatusMessage:
+          description: ''
+          type: string
+          example: Sample error message
+        errors:
+          description: ''
+          type: array
+          items:
+            $ref: '#/components/schemas/Error'
+          maxItems: 10000
+    Error:
+      type: object
+      properties:
+        errorCode:
+          type: string
+        errorType:
+          type: string
+        errorMessage:
+          type: string
+        target:
+          type: string
+    
+    #GetProductsSummaryResponse:
+    #  type: object
+    #  items: 
+    #    $ref: '#/components/schemas/ProductsSummary'
+    
+    GetProductsSummaryResponse:
+      type: object
+      properties:
+        productsSummary:
+          type: array
+          items:
+            allOf:
+              - $ref: '#/components/schemas/Summary'
+    
+    Summary:
+      type: object
+      properties:
+        productName:
+          type: string
+        investmentReturn:
+          type: string
+          format: decimal
+        incrementalRevenue:
+          type: string
+          format: decimal
+        netRevenue:
+          type: string
+          format: decimal
+        promotionAmount:
+          type: string
+          format: decimal
+        feesAmount:
+          type: string
+          format: decimal
+        
+  securitySchemes:
+    api_key:
+      type: apiKey
+      name: Authorization
+      description: |
+        ``` License format is WORLDPAY license='xxxx'``` 
+      in: header
